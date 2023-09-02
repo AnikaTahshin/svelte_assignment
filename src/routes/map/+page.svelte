@@ -4,10 +4,14 @@
   import OSM from "ol/source/OSM.js";
   import TileLayer from "ol/layer/Tile.js";
   import View from "ol/View.js";
+  import VectorLayer from "ol/layer/Vector.js";
+  import VectorSource from "ol/source/Vector.js";
+  import GeoJSON from "ol/format/GeoJSON.js";
 
   let map;
+  let posts = {};
 
-  onMount(() => {
+  onMount(async () => {
     map = new Map({
       target: "map",
       layers: [
@@ -20,10 +24,36 @@
         zoom: 2,
       }),
     });
+
+    posts = await getPost();
+
+    // if (posts && posts.resources && posts.resources.length > 0) {
+    //   const geoJSONPath = posts.resources[0].path;
+    //   const geoJSONResponse = await fetch(geoJSONPath);
+    //   const geoJSONData = await geoJSONResponse.json();
+
+    //   const vectorSource = new VectorSource({
+    //     features: new GeoJSON().readFeatures(geoJSONData),
+    //   });
+
+    //   const vectorLayer = new VectorLayer({
+    //     source: vectorSource,
+    //   });
+
+    //   map.addLayer(vectorLayer);
+    // }
   });
+
+  const getPost = async () => {
+    const res = await fetch("../../store/datapackage.json");
+    const data = await res.json();
+    console.log("responses", data);
+    return data;
+  };
+
+  // $: console.log("my name is", posts);
 </script>
 
-layer.setStyle(color: "#006a4e", opacity: 0.75,)
 <div id="map" />
 
 <style lang="postcss">
