@@ -12,8 +12,9 @@
 
       setAPIResponses(responseData);
 
-      apiData = responseData.slice(10, 20);
-
+      let res = responseData;
+      let bpiData = res.sort((a, b) => b.population - a.population);
+      apiData = bpiData.slice(0, 10);
       let countryLabelList = [];
       let populationList = [];
 
@@ -85,6 +86,18 @@
       },
     });
   }
+
+  // data?.languages
+  function checkCurrency(data) {
+    let curr = Object.keys(data?.currencies)[0];
+    return data.currencies[curr].name;
+  }
+
+  function getLanguage(data) {
+    let lang = Object.keys(data?.languages)[0];
+    return data.languages[lang];
+    // console.log("lang", lang);
+  }
 </script>
 
 <div class="flex-row">
@@ -97,8 +110,8 @@
           <th>Population</th>
           <th>UN Member Status</th>
           <th>CIOC</th>
-          <!-- <th>Currencies</th> -->
-          <!-- <th>Languages</th> -->
+          <th>Currencies</th>
+          <th>Languages</th>
         </tr>
       </thead>
 
@@ -108,10 +121,10 @@
             <td><img src={data?.flags?.png} alt="" width="30px" /></td>
             <td>{data?.name?.common}</td>
             <td>{data?.population}</td>
-            <td>{data?.unMember}</td>
+            <td>{data?.unMember ? "Yes" : "No"}</td>
             <td>{data?.cioc}</td>
-            <!-- <td>{data?.currencies?.MRU?.name}</td> -->
-            <!-- <td>{data?.languages}</td> -->
+            <td>{checkCurrency(data)}</td>
+            <td>{getLanguage(data)}</td>
           </tr>
         {/each}
       </tbody>
