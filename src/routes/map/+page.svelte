@@ -4,9 +4,6 @@
   import OSM from "ol/source/OSM.js";
   import TileLayer from "ol/layer/Tile.js";
   import View from "ol/View.js";
-  import VectorLayer from "ol/layer/Vector.js";
-  import VectorSource from "ol/source/Vector.js";
-  import GeoJSON from "ol/format/GeoJSON.js";
 
   let map;
   let posts = {};
@@ -34,8 +31,6 @@
     console.log("responses", data);
     return data;
   };
-
-  // $: console.log("my name is", posts);
 </script>
 
 <div id="map" />

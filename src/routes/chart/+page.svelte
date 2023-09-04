@@ -10,19 +10,24 @@
       const response = await fetch("https://restcountries.com/v3.1/all");
       const responseData = await response.json();
 
+      // set api response to svelte store
+
       setAPIResponses(responseData);
 
       let res = responseData;
+
+      // filter the top most populated country
       let filterData = res.sort((a, b) => b.population - a.population);
       apiData = filterData.slice(0, 10);
-      let countryLabelList = [];
-      let populationList = [];
+      let countryLabelList = []; //store country name
+      let populationList = []; //store population of countries
 
       apiData.map((el, index) => {
         countryLabelList.push(el?.name?.common);
         populationList.push(el?.population);
       });
 
+      // to create polar area chart
       getPolarChart(countryLabelList, populationList);
     } catch (error) {
       console.error("Error", error);
@@ -91,7 +96,6 @@
     });
   }
 
-  // data?.languages
   function getCurrency(data) {
     let curr = Object.keys(data?.currencies)[0];
 
