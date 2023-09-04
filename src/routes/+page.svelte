@@ -3,40 +3,43 @@
 </script>
 
 <slot />
-<main class="grid grid-cols-12 sm:grid-cols-1 md:grid-cols-2 h-screen">
-  <div class="grid">
-    <div class="grid grid-cols-2 row-span-5">
-      <div class="grid">
-        <div class="bg-blue-400" />
-        <div class="bg-teal-400" />
+<div class="h-screen grid md:grid-cols-2">
+  <!-- left side div starts -->
+  <div class="grid md:grid-cols-6">
+    <div class="row-span-5 col-span-6 grid grid-cols-1 md:grid-cols-6">
+      <div class="row-span-5 col-span-2 grid grid-cols-1 md:grid-cols-6">
+        <div class="row-span-3 col-span-6 bg-blue-400" />
+        <div class="row-span-2 col-span-6 bg-teal-400" />
       </div>
-      <div class="bg-rose-100" />
+      <div class="row-span-5 col-span-4 bg-rose-100" />
     </div>
-    <div class="bg-fuchsia-400" />
+    <div class="row-span-1 col-span-6 bg-fuchsia-400" />
   </div>
+  <!-- left side div ends -->
 
-  <div class="grid grid-rows-2">
-    <div class="bg-blue-400" />
-    <div class="grid grid-cols-2">
-      <div class="flex justify-center items-center bg-yellow-100">
-        <div class=" flex justify-center items-center">
+  <!-- right side div starts -->
+
+  <div class="grid md:grid-cols-6">
+    <div class="col-span-6 row-span-2 bg-blue-400" />
+    <div class="col-span-6 row-span-4 grid grid-cols-1 md:grid-cols-6">
+      <div class="col-span-4 bg-yellow-100 flex justify-center items-center">
+        <div
+          class="bg-[#293462] h-[300px] md:h-[300px] w-[300px] md:w-[300px] flex justify-center items-center"
+        >
           <div
-            class="bg-[#293462] h-[300px] md:h-[200px] w-[300px] md:w-[200px] flex justify-center items-center"
+            id="circle"
+            class="bg-yellow-100 overflow-hidden relative h-[200px] md:h-[100px] w-[200px] md:w-[100px] rounded-full flex justify-center items-center sm:grid-cols-1"
           >
-            <div
-              id="circle"
-              class="bg-yellow-100 overflow-hidden relative h-[200px] md:h-[100px] w-[200px] md:w-[100px] rounded-full flex justify-center items-center sm:grid-cols-1"
-            >
-              <div class="right-tri" />
-              <div class="left-tri" />
-            </div>
+            <div class="right-tri" />
+            <div class="left-tri" />
           </div>
         </div>
       </div>
-      <div class="bg-emerald-400" />
+      <div class="col-span-2 bg-emerald-400" />
     </div>
   </div>
-</main>
+  <!-- right side div ends -->
+</div>
 
 <style lang="postcss">
   :global(html) {
@@ -84,8 +87,8 @@
       top: 45px;
       left: 20px;
     }
+  }
 
-    @media screen and (max-width: 300) {
-    }
+  @media screen and (max-width: 300px) {
   }
 </style>

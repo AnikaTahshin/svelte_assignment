@@ -13,8 +13,8 @@
       setAPIResponses(responseData);
 
       let res = responseData;
-      let bpiData = res.sort((a, b) => b.population - a.population);
-      apiData = bpiData.slice(0, 10);
+      let filterData = res.sort((a, b) => b.population - a.population);
+      apiData = filterData.slice(0, 10);
       let countryLabelList = [];
       let populationList = [];
 
@@ -22,9 +22,10 @@
         countryLabelList.push(el?.name?.common);
         populationList.push(el?.population);
       });
+
       getPolarChart(countryLabelList, populationList);
     } catch (error) {
-      console.error("Error fetching API data:", error);
+      console.error("Error", error);
     }
   });
 
@@ -74,6 +75,9 @@
           },
         },
         plugins: {
+          legend: {
+            position: "bottom",
+          },
           title: {
             display: true,
             text: "Countries",
@@ -88,55 +92,60 @@
   }
 
   // data?.languages
-  function checkCurrency(data) {
+  function getCurrency(data) {
     let curr = Object.keys(data?.currencies)[0];
+
     return data.currencies[curr].name;
   }
 
   function getLanguage(data) {
     let lang = Object.keys(data?.languages)[0];
     return data.languages[lang];
-    // console.log("lang", lang);
   }
 </script>
 
-<div class="flex-row">
-  <div>
-    <table class="table-auto">
-      <thead>
-        <tr>
-          <th>Flag</th>
-          <th>Name</th>
-          <th>Population</th>
-          <th>UN Member Status</th>
-          <th>CIOC</th>
-          <th>Currencies</th>
-          <th>Languages</th>
-        </tr>
-      </thead>
+<!-- table of 10 top most populated country -->
+<div>
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3"> Flag </th>
+        <th scope="col" class="px-6 py-3"> Name </th>
+        <th scope="col" class="px-6 py-3"> Population </th>
+        <th scope="col" class="px-6 py-3"> UN Member Status </th>
+        <th scope="col" class="px-6 py-3"> CIOC </th>
 
-      <tbody>
-        {#each apiData as data}
-          <tr>
-            <td><img src={data?.flags?.png} alt="" width="30px" /></td>
-            <td>{data?.name?.common}</td>
-            <td>{data?.population}</td>
-            <td>{data?.unMember ? "Yes" : "No"}</td>
-            <td>{data?.cioc}</td>
-            <td>{checkCurrency(data)}</td>
-            <td>{getLanguage(data)}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-    <!-- <Line
-    data={apiData}
-    width={100}
-    height={50}
-    options={{ maintainAspectRatio: false }}
-  /> -->
-  </div>
-  <div>
-    <canvas id="polarAreaChart" width="400" height="400" />
-  </div>
+        <th scope="col" class="px-6 py-3"> Currencies </th>
+
+        <th scope="col" class="px-6 py-3"> Languages </th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each apiData as data}
+        <tr
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center"
+        >
+          <td class="px-6 py-4">
+            <img src={data?.flags?.png} alt="" width="30px" />
+          </td>
+          <td class="px-6 py-4"> {data?.name?.common} </td>
+          <td class="px-6 py-4"> {data?.population} </td>
+          <td class="px-6 py-4"> {data?.unMember ? "Yes" : "No"} </td>
+
+          <td class="px-6 py-4"> {data?.cioc} </td>
+
+          <td class="px-6 py-4"> {getCurrency(data)} </td>
+
+          <td class="px-6 py-4">{getLanguage(data)} </td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>
+
+<!-- polar area chart  -->
+<div>
+  <canvas id="polarAreaChart" width="400" height="400" />
 </div>

@@ -26,22 +26,6 @@
     });
 
     posts = await getPost();
-
-    // if (posts && posts.resources && posts.resources.length > 0) {
-    //   const geoJSONPath = posts.resources[0].path;
-    //   const geoJSONResponse = await fetch(geoJSONPath);
-    //   const geoJSONData = await geoJSONResponse.json();
-
-    //   const vectorSource = new VectorSource({
-    //     features: new GeoJSON().readFeatures(geoJSONData),
-    //   });
-
-    //   const vectorLayer = new VectorLayer({
-    //     source: vectorSource,
-    //   });
-
-    //   map.addLayer(vectorLayer);
-    // }
   });
 
   const getPost = async () => {
